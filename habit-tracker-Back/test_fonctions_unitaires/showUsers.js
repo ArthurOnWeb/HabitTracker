@@ -1,17 +1,25 @@
 const {MongoClient} = require('mongodb');
+const fs = require('fs');
 
 async function listDatabases(client){
     databasesList = await client.db().admin().listDatabases();
 
 };
 
+async function readMongoDBUri() {
+  try {
+    // Lire l'URI depuis le fichier mongodb-uri.txt
+    const uri = fs.readFileSync('mongodb-uri.txt', 'utf8').trim();
+    return uri;
+  } catch (e) {
+    console.error("Erreur lors de la lecture de l'URI MongoDB depuis le fichier.", e);
+    process.exit(1);
+  }
+}
+
 async function main(){
 
-  const user = "arattanavong"
-  const password = "cailloux"
-  const adress = "193.48.125.44"
-
-  const uri = "mongodb://" + user + ":" + password + "@" + adress + ":27017/?authMechanism=DEFAULT&authSource=admin"
+  const uri = await readMongoDBUri(); // Utiliser la fonction pour lire l'URI
   const client = new MongoClient(uri);
   try {
     // Connect to the MongoDB cluster
