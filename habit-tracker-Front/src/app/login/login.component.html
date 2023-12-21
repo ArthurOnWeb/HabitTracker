@@ -16,17 +16,32 @@
                 <span id="login">Login</span>
                 <span id="info-login">Veuillez entrer vos identifiants de connexion</span>
             </div>
-            <form>
-                <label for="username">Nom d'utilisateur :</label>
-                <input type="text" id="username" name="username" required>
-    
-                <label for="password">Mot de passe :</label>
-                <input type="password" id="password" name="password" required>
-    
-                <div class="remember-forgot">
-                    <label for="remember"><input type="checkbox" id="remember" name="remember"> Se souvenir de moi</label>
-                    <a href="#">Mot de passe oublié?</a>
+            <form id="login-form">
+                
+                <div class="username">
+                    <label for="username" id="username">Adresse mail</label>
+                    <input type="text" id="username" name="username" required>
                 </div>
+                <div class="password">
+                    <label for="password">Mot de passe :</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                    
+                
+               
+    
+                <div class="remember">
+                    <input type="checkbox" id="remember" name="remember">
+                    <label for="remember"> Se souvenir de moi</label>
+                    <div class="right">
+                        <a href="#">Mot de passe oublié?</a>
+                    </div>
+                    
+                </div>
+                
+                
+                
+                
     
                 <button type="submit">Se connecter</button>
             </form>

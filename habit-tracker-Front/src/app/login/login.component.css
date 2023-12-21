@@ -19,7 +19,7 @@
 
 .header-form{
     margin-top: 3rem;
-    margin-bottom: 10rem;
+    margin-bottom: 6rem;
     display: flex;
     flex-direction: column;
 }
@@ -30,7 +30,6 @@
 
 .header-form span#login{
     color: #000;
-
     font-family: Inter;
     font-size: 3.125rem;
     font-style: normal;
@@ -38,5 +37,71 @@
     line-height: normal;
 }
 
+.header-form span#info-login{
+    color: #818181;
+    font-family: Inter;
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+#login-form{
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.right-panel input{
+    
+    width: 36.6875rem;
+    height: 5.0625rem;
+    flex-shrink: 0;
+    border-radius: 0.625rem;
+    border: 1px solid #FF567B;
+    background: #FFF;
+    margin-bottom: 2rem;
+    padding-left: 1rem;
+    font-size: 20px; /* Taille de la police du texte entré */
+    text-align: left; /* Centre le texte à gauche */
+    line-height: 100rem;
+}
 
 
+.username, .password{
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.username label, .password label{
+        position: absolute;
+        top:0.8rem;
+        left:0.75rem;
+        color: #818181;
+        font-family: Inter;
+        font-size: 0.8125rem;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+}
+
+
+.remember label{
+    color: #818181;
+    font-family: Inter;
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.remember {
+    display: flex;
+    justify-content: space-between;
+}
+
+input#remember{
+    width: 1rem;
+    height: 1rem;
+}
