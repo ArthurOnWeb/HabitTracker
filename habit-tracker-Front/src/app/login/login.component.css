@@ -1,0 +1,42 @@
+* {
+    margin: 0;
+    padding: 0;
+  }
+
+.login-container{
+    display: flex;
+}
+.left-panel{
+    background : url("login-image.png") lightgray 50% / cover no-repeat;
+    width: 40rem;
+    height: 42rem;
+}
+
+.right-panel{
+    margin-left : 3rem;
+
+}
+
+.header-form{
+    margin-top: 3rem;
+    margin-bottom: 10rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.header-form span{
+    margin-bottom: .5rem;
+}
+
+.header-form span#login{
+    color: #000;
+
+    font-family: Inter;
+    font-size: 3.125rem;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
+
+
+
