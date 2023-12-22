@@ -7,15 +7,17 @@
     <title>Login</title>
 </head>
 <body>
+    <!--
+
+    -->
     <div class="login-container">
-        <div class="left-panel">
-            
-        </div>
-        <div class="right-panel">
+        <div class="login-content">
             <div class="header-form">
                 <span id="login">Login</span>
                 <span id="info-login">Veuillez entrer vos identifiants de connexion</span>
             </div>
+
+            
             <form id="login-form">
                 
                 <div class="username">
@@ -23,31 +25,31 @@
                     <input type="text" id="username" name="username" required>
                 </div>
                 <div class="password">
-                    <label for="password">Mot de passe :</label>
+                    <label for="password">Mot de passe</label>
                     <input type="password" id="password" name="password" required>
                 </div>
                     
-                
+            </form>
                
     
                 <div class="remember">
-                    <input type="checkbox" id="remember" name="remember">
-                    <label for="remember"> Se souvenir de moi</label>
-                    <div class="right">
-                        <a href="#">Mot de passe oublié?</a>
+                    <div class="left">
+                        <input type="checkbox" id="remember" name="remember">
+                        <label for="remember"> Se souvenir de moi</label>
                     </div>
+                    <a href="#">Mot de passe oublié?</a>
                     
                 </div>
                 
-                
-                
-                
     
-                <button type="submit">Se connecter</button>
-            </form>
+            <button type="submit"><span>Se connecter</span></button>
+            
     
-            <p>Je n'ai pas de compte. <a class="signup-link" href="#">M'inscrire</a></p>
+            <p class="no-account">Je n'ai pas de compte. <a class="signup-link" href="#">M'inscrire</a></p>
+        
         </div>
-    </div>
+            
+        </div>
+    
 </body>
 </html>
