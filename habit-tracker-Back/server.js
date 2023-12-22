@@ -124,9 +124,10 @@ app.post('/api/checkPassword', async (req, res) => {
   }
 });
 
-// Endpoint pour créer une habitude
-app.post('/api/createHabit', async (req, res) => {
-  const { nom, idOwner, description, fréquence } = req.body;
+// Endpoint pour créer une habitude pour un utilisateur donné
+app.post('/api/createHabit/:username', async (req, res) => {
+  const { username } = req.params;
+  const { habitName, frequency, duration,description} = req.body;
 
   const uri = await readMongoDBUri();
   const client = new MongoClient(uri);
@@ -135,19 +136,27 @@ app.post('/api/createHabit', async (req, res) => {
     await client.connect();
 
     const arattanavongDB = client.db("arattanavong");
-    const habitsCollection = arattanavongDB.collection("Habits");
+    const userCollection = arattanavongDB.collection("User");
+    const habitCollection = arattanavongDB.collection("Habits");
 
-    // Créer un nouvel objet pour l'habitude
-    const newHabit = {
-      nom: nom,
-      idOwner: idOwner,
-      description: description,
-      fréquence: fréquence,
-      historique: [], // Initialiser l'historique avec un tableau vide
+    // Vérifier si l'utilisateur existe
+    const user = await userCollection.findOne({ username: new ObjectId(username) });
+    if (!user) {
+      res.status(404).json({ error: 'Utilisateur non trouvé' });
+      return;
+    }
+
+    // Créer l'habitude
+    const habit = {
+      userId: new ObjectId(userId),
+      habitName: habitName,
+      frequency: frequency,
+      duration: duration,
+      description:description,
+      history:[]
     };
 
-    // Insérer l'habitude dans la collection
-    const result = await habitsCollection.insertOne(newHabit);
+    const result = await habitCollection.insertOne(habit);
 
     res.status(201).json({ message: 'Habitude créée avec succès', habitId: result.insertedId });
   } catch (e) {
@@ -157,6 +166,7 @@ app.post('/api/createHabit', async (req, res) => {
     await client.close();
   }
 });
+
 
 // Démarrer le serveur
 app.listen(port, () => {
