@@ -3,9 +3,17 @@ const bodyParser = require('body-parser');
 const bcrypt = require('bcrypt');
 const { MongoClient } = require('mongodb');
 const fs = require('fs');
+const cors = require('cors');
 
 const app = express();
 const port = 3000;
+
+// Utilise le middleware cors
+app.use(cors({
+  origin: 'http://localhost:4200',
+  credentials: true,
+}));
+
 
 // Middleware pour parser le corps des requêtes en JSON
 app.use(bodyParser.json());
@@ -140,7 +148,7 @@ app.post('/api/createHabit/:username', async (req, res) => {
     const habitCollection = arattanavongDB.collection("Habits");
 
     // Vérifier si l'utilisateur existe
-    const user = await userCollection.findOne({ username: new ObjectId(username) });
+    const user = await userCollection.findOne({ username: username });
     if (!user) {
       res.status(404).json({ error: 'Utilisateur non trouvé' });
       return;
@@ -148,7 +156,7 @@ app.post('/api/createHabit/:username', async (req, res) => {
 
     // Créer l'habitude
     const habit = {
-      userId: new ObjectId(userId),
+      username: username,
       habitName: habitName,
       frequency: frequency,
       duration: duration,

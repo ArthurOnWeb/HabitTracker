@@ -5,9 +5,9 @@ const baseUrl = 'http://localhost:3000/api'; // Assure-toi de mettre le bon port
 async function createUser() {
   try {
     const response = await axios.post(`${baseUrl}/createUser`, {
-      username: 'Ugo',
-      email: 'Ugo@example.com',
-      password: 'lesIDU'
+      username: 'John',
+      email: 'john@example.com',
+      password: '1234'
     });
 
     console.log('Create User Response:', response.data);
@@ -31,9 +31,10 @@ async function checkPassword() {
 
 async function createHabit() {
   try {
-    const response = await axios.post(`${baseUrl}/createHabit`, {
-      nom: "marche",
-      idOwner: "657b1982bcf90a81fd0f6708",
+    const user="John"
+    const response = await axios.post(`${baseUrl}/createHabit/${user}`, {
+      habitName: "marche",
+      username:user,
       description: "marcher 10 km par jour",
       fréquence: "quotidien"
     });
@@ -46,6 +47,6 @@ async function createHabit() {
 
 
 // Exécuter les requêtes de test
-// createUser();
+createUser();
 // checkPassword();
-createHabit();
+// createHabit();
