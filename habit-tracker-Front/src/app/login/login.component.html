@@ -1,55 +1,57 @@
 <!DOCTYPE html>
 
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
-</head>
-<body>
-    <!--
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Login</title>
+    </head>
+    <body>
+        <!--
 
-    -->
-    <div class="login-container">
-        <div class="login-content">
-            <div class="header-form">
-                <span id="login">Login</span>
-                <span id="info-login">Veuillez entrer vos identifiants de connexion</span>
-            </div>
+        -->
+        <div class="login-container">
+            <div class="login-content">
+                <div class="header-form">
+                    <span id="login">Login</span>
+                    <span id="info-login">Veuillez entrer vos identifiants de connexion</span>
+                </div>
 
-            
-            <form id="login-form">
                 
-                <div class="username">
-                    <label for="username" id="username">Adresse mail</label>
-                    <input type="text" id="username" name="username" required>
-                </div>
-                <div class="password">
-                    <label for="password">Mot de passe</label>
-                    <input type="password" id="password" name="password" required>
-                </div>
-                    
-            </form>
-               
-    
-                <div class="remember">
-                    <div class="left">
-                        <input type="checkbox" id="remember" name="remember">
-                        <label for="remember"> Se souvenir de moi</label>
+                
+                <form id="login-form">
+
+                    <div class="username">
+                        <label for="username" id="username">Adresse mail</label>
+                        <input type="text" id="username" name="username" required [(ngModel)]="loginObj.username" >
                     </div>
-                    <a href="#">Mot de passe oublié?</a>
-                    
-                </div>
                 
-    
-            <button type="submit"><span>Se connecter</span></button>
-            
-    
-            <p class="no-account">Je n'ai pas de compte. <a class="signup-link" href="#">M'inscrire</a></p>
+                    <div class="password">
+                        <label for="password">Mot de passe</label>
+                        <input type="password" id="password" name="password" required [(ngModel)]="loginObj.password">
+                    </div>
+                
+                </form>
+                            
         
-        </div>
+                    <div class="remember">
+                        <div class="left">
+                            <input type="checkbox" id="remember" name="remember">
+                            <label for="remember"> Se souvenir de moi</label>
+                        </div>
+                        <a href="#">Mot de passe oublié?</a>
+                        
+                    </div>
+                    
+        
+                <button type="submit" (click)="checkPassword()"><span>Se connecter</span></button>
+                
+        
+                <p class="no-account">Je n'ai pas de compte. <a class="signup-link" href="#">M'inscrire</a></p>
             
-        </div>
-    
-</body>
+            </div>
+                
+            </div>
+        
+    </body>
 </html>
