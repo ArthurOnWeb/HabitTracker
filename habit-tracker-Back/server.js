@@ -60,6 +60,35 @@ app.post('/api/createUser', async (req, res) => {
   }
 });
 
+// Endpoint pour obtenir l'ID d'un utilisateur par son nom d'utilisateur
+app.get('/api/getUserId/:username', async (req, res) => {
+    const { username } = req.params;
+  
+    const uri = await readMongoDBUri();
+    const client = new MongoClient(uri);
+  
+    try {
+      await client.connect();
+  
+      const arattanavongDB = client.db("arattanavong");
+      const userCollection = arattanavongDB.collection("User");
+  
+      const user = await userCollection.findOne({ username: username });
+  
+      if (!user) {
+        res.status(404).json({ error: 'Utilisateur non trouvé' });
+        return;
+      }
+  
+      res.json({ userId: user._id });
+    } catch (e) {
+      console.error(e);
+      res.status(500).json({ error: 'Erreur interne du serveur' });
+    } finally {
+      await client.close();
+    }
+  });
+
 // Endpoint pour vérifier le mot de passe
 app.post('/api/checkPassword', async (req, res) => {
   const { username, inputPassword } = req.body;
@@ -94,6 +123,50 @@ app.post('/api/checkPassword', async (req, res) => {
     await client.close();
   }
 });
+
+// Endpoint pour créer une habitude pour un utilisateur donné
+app.post('/api/createHabit/:username', async (req, res) => {
+  const { username } = req.params;
+  const { habitName, frequency, duration,description} = req.body;
+
+  const uri = await readMongoDBUri();
+  const client = new MongoClient(uri);
+
+  try {
+    await client.connect();
+
+    const arattanavongDB = client.db("arattanavong");
+    const userCollection = arattanavongDB.collection("User");
+    const habitCollection = arattanavongDB.collection("Habits");
+
+    // Vérifier si l'utilisateur existe
+    const user = await userCollection.findOne({ username: new ObjectId(username) });
+    if (!user) {
+      res.status(404).json({ error: 'Utilisateur non trouvé' });
+      return;
+    }
+
+    // Créer l'habitude
+    const habit = {
+      userId: new ObjectId(userId),
+      habitName: habitName,
+      frequency: frequency,
+      duration: duration,
+      description:description,
+      history:[]
+    };
+
+    const result = await habitCollection.insertOne(habit);
+
+    res.status(201).json({ message: 'Habitude créée avec succès', habitId: result.insertedId });
+  } catch (e) {
+    console.error(e);
+    res.status(500).json({ error: 'Erreur interne du serveur' });
+  } finally {
+    await client.close();
+  }
+});
+
 
 // Démarrer le serveur
 app.listen(port, () => {

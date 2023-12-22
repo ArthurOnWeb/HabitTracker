@@ -29,6 +29,23 @@ async function checkPassword() {
   }
 }
 
+async function createHabit() {
+  try {
+    const response = await axios.post(`${baseUrl}/createHabit`, {
+      nom: "marche",
+      idOwner: "657b1982bcf90a81fd0f6708",
+      description: "marcher 10 km par jour",
+      fréquence: "quotidien"
+    });
+
+    console.log('Create Habit Response:', response.data);
+  } catch (error) {
+    console.error('Error creating habit:', error.response.data || error.message);
+  }
+}
+
+
 // Exécuter les requêtes de test
-createUser();
-checkPassword();
+// createUser();
+// checkPassword();
+createHabit();
