@@ -1,7 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const bcrypt = require('bcrypt');
-const { MongoClient } = require('mongodb');
+const { MongoClient, ObjectId } = require('mongodb');
 const fs = require('fs');
 const cors = require('cors');
 
@@ -159,7 +159,6 @@ app.post('/api/createHabit/:username', async (req, res) => {
       username: username,
       habitName: habitName,
       frequency: frequency,
-      duration: duration,
       description:description,
       history:[]
     };
@@ -174,6 +173,109 @@ app.post('/api/createHabit/:username', async (req, res) => {
     await client.close();
   }
 });
+
+// Endpoint pour supprimer une habitude pour un utilisateur donné
+app.delete('/api/deleteHabit/:habitId', async (req, res) => {
+  const { habitId } = req.params;
+
+  const uri = await readMongoDBUri();
+  const client = new MongoClient(uri);
+
+  try {
+    await client.connect();
+
+    const arattanavongDB = client.db("arattanavong");
+    const habitCollection = arattanavongDB.collection("Habits");
+
+    // Vérifier si l'habitude existe
+    const habit = await habitCollection.findOne({ _id: new ObjectId(habitId) });
+    if (!habit) {
+      res.status(404).json({ error: 'Habitude non trouvée' });
+      return;
+    }
+
+    // Supprimer l'habitude
+    const result = await habitCollection.deleteOne({ _id: new ObjectId(habitId) });
+
+    if (result.deletedCount === 1) {
+      res.json({ message: 'Habitude supprimée avec succès' });
+    } else {
+      res.status(500).json({ error: 'Échec de la suppression de l\'habitude' });
+    }
+  } catch (e) {
+    console.error(e);
+    res.status(500).json({ error: 'Erreur interne du serveur' });
+  } finally {
+    await client.close();
+  }  
+});
+
+// Endpoint pour récupérer les habitudes d'un utilisateur donné
+app.get('/api/getHabits/:username', async (req, res) => {
+  const { username } = req.params;
+
+  const uri = await readMongoDBUri();
+  const client = new MongoClient(uri);
+
+  try {
+    await client.connect();
+
+    const arattanavongDB = client.db("arattanavong");
+    const habitCollection = arattanavongDB.collection("Habits");
+
+    // Récupérer les habitudes de l'utilisateur
+    const habits = await habitCollection.find({ username: username }).toArray();
+
+    res.json(habits);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Erreur interne du serveur' });
+  } finally {
+    await client.close();
+  }
+});
+
+// Endpoint pour ajouter une date à l'historique d'une habitude
+app.post('/api/addDateToHistory/:habitId', async (req, res) => {
+  const { habitId } = req.params;
+  const { date } = req.body;
+
+  const uri = await readMongoDBUri();
+  const client = new MongoClient(uri);
+
+  try {
+    await client.connect();
+
+    const arattanavongDB = client.db("arattanavong");
+    const habitCollection = arattanavongDB.collection("Habits");
+
+    // Vérifier si l'habitude existe
+    const habit = await habitCollection.findOne({ _id: new ObjectId(habitId) });
+    if (!habit) {
+      res.status(404).json({ error: 'Habitude non trouvée' });
+      return;
+    }
+
+    // Ajouter la date à l'historique
+    const result = await habitCollection.updateOne(
+      { _id: new ObjectId(habitId) },
+      { $push: { history: date } }
+    );
+
+    if (result.modifiedCount === 1) {
+      res.json({ message: 'Date ajoutée à l\'historique avec succès' });
+    } else {
+      res.status(500).json({ error: 'Échec de l\'ajout de la date à l\'historique' });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Erreur interne du serveur' });
+  } finally {
+    await client.close();
+  }
+});
+
+
 
 
 // Démarrer le serveur
