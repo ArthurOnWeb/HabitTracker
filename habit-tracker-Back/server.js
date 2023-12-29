@@ -4,8 +4,12 @@ const bcrypt = require('bcrypt');
 const { MongoClient, ObjectId } = require('mongodb');
 const fs = require('fs');
 const cors = require('cors');
+const cookieParser = require('cookie-parser');
+const jwt = require('jsonwebtoken');
+
 
 const app = express();
+app.use(cookieParser());
 const port = 3000;
 
 // Utilise le middleware cors
@@ -97,40 +101,48 @@ app.get('/api/getUserId/:username', async (req, res) => {
     }
   });
 
-// Endpoint pour vérifier le mot de passe
-app.post('/api/checkPassword', async (req, res) => {
-  const { username, inputPassword } = req.body;
-
-  const uri = await readMongoDBUri();
-  const client = new MongoClient(uri);
-
-  try {
-    await client.connect();
-
-    const arattanavongDB = client.db("arattanavong");
-    const userCollection = arattanavongDB.collection("User");
-
-    const user = await userCollection.findOne({ username: username });
-
-    if (!user) {
-      res.status(404).json({ error: 'Utilisateur non trouvé' });
-      return;
+  // Endpoint pour vérifier le mot de passe
+  app.post('/api/checkPassword', async (req, res) => {
+    const { username, inputPassword } = req.body;
+  
+    const uri = await readMongoDBUri();
+    const client = new MongoClient(uri);
+  
+    try {
+      await client.connect();
+  
+      const arattanavongDB = client.db("arattanavong");
+      const userCollection = arattanavongDB.collection("User");
+  
+      const user = await userCollection.findOne({ username: username });
+  
+      if (!user) {
+        res.status(401).json({ error: 'Nom d\'utilisateur ou mot de passe incorrect' });
+        return;
+      }
+  
+      const passwordMatch = await bcrypt.compare(inputPassword, user.password);
+  
+      if (passwordMatch) {
+        // Générer un token JWT
+        const token = jwt.sign({ username: user.username, userId: user._id }, 'secret_key', { expiresIn: '1h' });
+  
+        // Envoyer le token dans un cookie
+        res.cookie('token', token, { httpOnly: true });
+  
+        // Répondre avec un message de succès et le token
+        res.status(200).json({ message: 'Connexion réussie', token: token });
+      } else {
+        res.status(401).json({ error: 'Mot de passe incorrect' });
+      }
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Erreur interne du serveur' });
+    } finally {
+      await client.close();
     }
-
-    const passwordMatch = await bcrypt.compare(inputPassword, user.password);
-
-    if (passwordMatch) {
-      res.json({ message: 'Mot de passe correct' });
-    } else {
-      res.status(401).json({ error: 'Mot de passe incorrect' });
-    }
-  } catch (e) {
-    console.error(e);
-    res.status(500).json({ error: 'Erreur interne du serveur' });
-  } finally {
-    await client.close();
-  }
-});
+  });
+  
 
 // Endpoint pour créer une habitude pour un utilisateur donné
 app.post('/api/createHabit/:username', async (req, res) => {

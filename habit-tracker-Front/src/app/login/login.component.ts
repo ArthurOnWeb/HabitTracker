@@ -29,7 +29,10 @@ export class LoginComponent {
 
   checkPassword() {
     this.apiService.checkPassword(this.loginObj.username, this.loginObj.password).subscribe(
-      response => console.log(response),
+      response => {
+        console.log(response);
+        document.cookie = `token=${response.token}; path=/`; // Utilise le nom de cookie et le token que tu reçois du serveur
+      },
       error => console.error(error)
     );
   }
