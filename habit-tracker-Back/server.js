@@ -1,9 +1,11 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 const { MongoClient, ObjectId } = require('mongodb');
 const fs = require('fs');
 const cors = require('cors');
+const { error } = require('console');
 
 const app = express();
 const port = 3000;
@@ -29,44 +31,67 @@ async function readMongoDBUri() {
   }
 }
 
-// Endpoint pour créer un utilisateur
-app.post('/api/createUser', async (req, res) => {
-  const { username, email, password } = req.body;
-
+async function connectDb(){
   const uri = await readMongoDBUri();
   const client = new MongoClient(uri);
+  await client.connect();
+  const arattanavongDB = client.db("arattanavong");
+  return arattanavongDB;
+}
+
+async function closeClient(){
+  const uri = await readMongoDBUri();
+  const client = new MongoClient(uri);
+  await client.close()
+}
+// Endpoint pour créer un utilisateur
+app.post('/api/createUser', async (req, res) => {
+  const {username, password, confirmPassword} = req.body
+
+  
 
   try {
-    await client.connect();
+    
 
-    const arattanavongDB = client.db("arattanavong");
-    const userCollection = arattanavongDB.collection("User");
+    const db = connectDb();
+    const userCollection = (await db).collection("User");
+
+    
+    if(password !== confirmPassword){
+      return res.status(400).json({error: 'Passwords do not match. '});
+    }
 
     // Vérifier si l'utilisateur existe déjà
     const existingUser = await userCollection.findOne({ username: username });
     if (existingUser) {
-      res.status(409).json({ error: 'Cet utilisateur existe déjà.' });
-      return;
+      return res.status(409).json({ error: 'Cet utilisateur existe déjà.' });
+      
     }
 
-    const hashedPassword = await bcrypt.hash(password, 10);
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
 
     const user = {
       username: username,
-      email: email,
+      email: `${username}@example.com`,
       password: hashedPassword,
     };
 
     const result = await userCollection.insertOne(user);
 
-    res.status(201).json({ message: 'Utilisateur créé avec succès', userId: result.insertedId });
+    // Génération du token d'authentification
+    const token = jwt.sign({ userId: user._id }, 'Jsed_hsfkd%5');
+    res.status(201).json({ token });
+
   } catch (e) {
     console.error(e);
     res.status(500).json({ error: 'Erreur interne du serveur' });
   } finally {
-    await client.close();
+    await closeClient();
   }
 });
+
+
 
 // Endpoint pour obtenir l'ID d'un utilisateur par son nom d'utilisateur
 app.get('/api/getUserId/:username', async (req, res) => {
@@ -97,40 +122,62 @@ app.get('/api/getUserId/:username', async (req, res) => {
     }
   });
 
-// Endpoint pour vérifier le mot de passe
-app.post('/api/checkPassword', async (req, res) => {
-  const { username, inputPassword } = req.body;
-
-  const uri = await readMongoDBUri();
-  const client = new MongoClient(uri);
-
+app.post('/api/login', async (req, res) => {
   try {
-    await client.connect();
-
-    const arattanavongDB = client.db("arattanavong");
-    const userCollection = arattanavongDB.collection("User");
-
-    const user = await userCollection.findOne({ username: username });
+    const { username, password } = req.body;
+    const db = connectDb();
+    const userCollection = (await db).collection("User");
+    const user = await userCollection.findOne({ username });
 
     if (!user) {
-      res.status(404).json({ error: 'Utilisateur non trouvé' });
-      return;
+      return res.status(401).send('Invalid username or password');
     }
 
-    const passwordMatch = await bcrypt.compare(inputPassword, user.password);
+    const isPasswordValid = await bcrypt.compare(password, user.password);
 
-    if (passwordMatch) {
-      res.json({ message: 'Mot de passe correct' });
-    } else {
-      res.status(401).json({ error: 'Mot de passe incorrect' });
+    if (!isPasswordValid) {
+      return res.status(401).send('Invalid username or password');
     }
-  } catch (e) {
-    console.error(e);
-    res.status(500).json({ error: 'Erreur interne du serveur' });
-  } finally {
-    await client.close();
+
+    const token = jwt.sign({ userId: user._id }, 'secret_key');
+    return res.status(200).json({ token });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).send('Internal Server Error');
   }
+  closeClient()
 });
+  
+
+
+
+  // const { username, inputPassword } = req.body;
+
+  // const uri = await readMongoDBUri();
+  // const client = new MongoClient(uri);
+
+  // try {
+  //   await client.connect();
+
+  //   const arattanavongDB = client.db("arattanavong");
+  //   const userCollection = arattanavongDB.collection("User");
+
+  //   const user = await userCollection.findOne({ username: username });
+
+  //   if (!user) {
+  //     res.status(401).json({ message: 'Utilisateur non trouvé' });
+      
+  //   }
+  //   return bcrypt.compare(inputPassword, user.password);
+    
+  // } catch (e) {
+  //   console.log("erreur");
+  //   res.status(500).json({ error: 'Erreur interne du serveur' });
+  //   return false;
+  // } finally {
+  //   await client.close();
+  // }
+
 
 // Endpoint pour créer une habitude pour un utilisateur donné
 app.post('/api/createHabit/:username', async (req, res) => {

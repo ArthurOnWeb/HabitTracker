@@ -1,10 +1,10 @@
 {
   "name": "habit-tracker-back",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
   },
   "keywords": [],
   "author": "",
@@ -12,10 +12,14 @@
   "dependencies": {
     "axios": "^1.6.2",
     "bcrypt": "^5.1.1",
+    "body-parser": "^1.20.2",
     "cors": "^2.8.5",
     "express": "^4.18.2",
     "fs": "^0.0.1-security",
+    "jsonwebtoken": "^9.0.2",
+    "mangodb": "^1.0.0",
     "mongodb": "^6.3.0",
     "mongoose": "^8.0.3"
-  }
+  },
+  "description": ""
 }
