@@ -1,5 +1,4 @@
 import { Component, ViewChild } from '@angular/core';
-import { ApiService } from '../api.service';
 import { FormsModule, NgForm } from '@angular/forms';
 import { UserService } from '../user.service';
 import { Router } from '@angular/router';
