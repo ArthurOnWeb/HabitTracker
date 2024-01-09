@@ -34,6 +34,7 @@ export class LoginComponent {
       .subscribe(
         (response: any) => {
           localStorage.setItem('token', response.token);
+          localStorage.setItem('username',this.username);
           this.router.navigate(['/home-page']);
 
         },
