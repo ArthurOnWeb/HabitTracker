@@ -182,7 +182,7 @@ app.post('/api/login', async (req, res) => {
 // Endpoint pour créer une habitude pour un utilisateur donné
 app.post('/api/createHabit/:username', async (req, res) => {
   const { username } = req.params;
-  const { habitName, frequency, duration,description} = req.body;
+  const { habitName, frequency,description} = req.body;
 
   const uri = await readMongoDBUri();
   const client = new MongoClient(uri);
