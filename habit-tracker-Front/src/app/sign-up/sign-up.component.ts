@@ -29,7 +29,7 @@ export class SignUpComponent {
         (response: any) => {
           console.log('User registered successfully');
           localStorage.setItem('token', response.token);
-          this.router.navigate(['/homepage'])
+          this.router.navigate(['/home-page'])
         },
         (error) => {
           console.log("Username : ",this.username)

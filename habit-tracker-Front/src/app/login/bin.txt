@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    
+</head>
+<body class="flex justify-center">
+
+<div class="container flex items-center mt-10 mb-10 w-54 h-50 border-1 border-solid border-gray-300 shadow-md">
+    <div class="login-content ml-24">
+        <div class="header-form mt-12 mb-16 flex flex-col">
+            <span id="login" class="text-4xl font-bold">Login</span>
+            <span id="info-login" class="text-gray-500 text-sm">Veuillez entrer vos identifiants de connexion</span>
+    </div>
+
+        <form id="login-form" class="flex flex-col relative">
+            <div class="username relative">
+                <label for="username" class="absolute top-2 left-2 text-gray-600 text-xs">Adresse mail</label>
+                <input type="text" id="username" name="username" required [(ngModel)]="loginObj.username" class="w-96 h-16 border border-pink-500 bg-white mb-4 pl-4 text-base">
+            </div>
+
+            <div class="password relative">
+                <label for="password" class="absolute top-2 left-2 text-gray-600 text-xs">Mot de passe</label>
+                <input type="password" id="password" name="password" required [(ngModel)]="loginObj.password" class="w-96 h-16 border border-pink-500 bg-white mb-4 pl-4 text-base">
+            </div>
+        </form>
+
+        <div class="remember flex justify-between mb-4">
+            <div class="left flex items-center">
+                <input type="checkbox" id="remember" name="remember" class="w-4 h-4">
+                <label for="remember" class="ml-2 text-gray-500 text-sm">Se souvenir de moi</label>
+            </div>
+            <a href="#" class="text-pink-500 text-sm">Mot de passe oublié?</a>
+        </div>
+
+        <button type="submit" (click)="checkPassword()" class="w-96 h-20 mt-10 bg-pink-500 border border-gray-400 text-white font-bold text-lg shadow-md hover:shadow-lg">
+            <span>Se connecter</span>
+        </button>
+
+        <p class="no-account mt-6 text-gray-500 text-base">Je n'ai pas de compte. <a href="#" class="text-pink-500 font-bold">M'inscrire</a></p>
+    </div>
+</div>
+
+</body>
+</html>
+
+'./src/**/*.{html,ts}'
