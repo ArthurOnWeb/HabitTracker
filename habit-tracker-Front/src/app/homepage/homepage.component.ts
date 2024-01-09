@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { NavbarComponent } from '../navbar/navbar.component';
 import { HabitService } from '../habit.service';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
@@ -7,7 +8,7 @@ import { stringify } from 'querystring';
 @Component({
   selector: 'app-homepage',
   standalone: true,
-  imports: [CommonModule],
+  imports: [NavbarComponent,CommonModule],
   templateUrl: './homepage.component.html',
 })
 export class HomepageComponent implements OnInit {
