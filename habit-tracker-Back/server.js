@@ -282,7 +282,36 @@ app.get('/api/getHabits/:username', async (req, res) => {
   }
 });
 
-// Endpoint pour ajouter une date à l'historique d'une habitude
+// Endpoint qui permet de récupérer une habitude par son ID
+app.get('/api/getHabitById/:habitId', async (req, res) => {
+  const { habitId } = req.params;
+
+  const uri = await readMongoDBUri();
+  const client = new MongoClient(uri);
+
+  try {
+    await client.connect();
+
+    const arattanavongDB = client.db("arattanavong");
+    const habitCollection = arattanavongDB.collection("Habits");
+
+    // Récupérer l'habitude par son ID
+    const habit = await habitCollection.findOne({ _id: new ObjectId(habitId) });
+
+    if (habit) {
+      res.json(habit);
+    } else {
+      res.status(404).json({ error: 'Habitude non trouvée' });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Erreur interne du serveur' });
+  } finally {
+    await client.close();
+  }
+});
+
+
 app.post('/api/addDateToHistory/:habitId', async (req, res) => {
   const { habitId } = req.params;
   const { date } = req.body;
@@ -300,6 +329,12 @@ app.post('/api/addDateToHistory/:habitId', async (req, res) => {
     const habit = await habitCollection.findOne({ _id: new ObjectId(habitId) });
     if (!habit) {
       res.status(404).json({ error: 'Habitude non trouvée' });
+      return;
+    }
+
+    // Vérifier si la date existe déjà dans l'historique
+    if (habit.history.includes(date)) {
+      res.status(409).json({ error: 'Date déjà ajoutée à l\'historique' });
       return;
     }
 
@@ -321,6 +356,7 @@ app.post('/api/addDateToHistory/:habitId', async (req, res) => {
     await client.close();
   }
 });
+
 
 // Endpoint pour modifier une habitude
 app.patch('/api/updateHabit/:username/:habitId', async (req, res) => {
