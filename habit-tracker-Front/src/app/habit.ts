@@ -1,5 +1,5 @@
 export class Habit {
-    id: string;
+    _id: string;
     username: string;
     habitName: string;
     frequency: string[];
@@ -7,13 +7,13 @@ export class Habit {
     history: Date[];
   
     constructor(
-      id: string, 
+      _id: string, 
       username: string,
       habitName: string,
       frequency: string[],
       description: string,
     ) {
-      this.id = id;
+      this._id = _id;
       this.username = username;
       this.habitName = habitName;
       this.frequency = frequency;

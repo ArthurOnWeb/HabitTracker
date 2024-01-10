@@ -59,7 +59,8 @@ export class HomepageComponent implements OnInit {
   }
 
   goToHabit(habit: Habit) {
-    this.router.navigate(['/habit', habit.id])
+    
+    this.router.navigate(['/habit', habit._id])
   }
   
 }
