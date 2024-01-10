@@ -24,7 +24,7 @@ export class HabitService {
     const url = `${this.baseUrl}/getHabits/${username}`;
     return this.http.get<Habit[]>(url);
   }
-  addDateToHistory(habitId:string,date:string):Observable<any>{
+  addDateToHistory(habitId:string,date:Date):Observable<any>{
     const url=`${this.baseUrl}/addDateToHistory/${habitId}`;
     const body = {date};
     return this.http.post(url,body);

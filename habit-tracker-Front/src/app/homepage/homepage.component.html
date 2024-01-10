@@ -14,6 +14,9 @@
             <div class="flex flex-wrap mt-5">
                 <div *ngFor="let habit of habits" class="flex justify-center items-center mr-5 mb-5 w-[16.5rem] h-[12rem] bg-primary rounded-lg cursor-pointer hover:opacity-70">
                     <span class="text-white">{{habit.habitName}}</span>
+                    <div>
+                    <button (click)="addDateToHabit(habit.id)" class="w-12 h-12 border border-rose-600 rounded-full"></button>
+                </div>
                 </div>
             </div>
         </div>
