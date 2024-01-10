@@ -1,13 +1,21 @@
 import { Injectable } from '@angular/core';
-
+import { BehaviorSubject, Observable } from 'rxjs';
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class AuthService {
+    private isLoggedIn = new BehaviorSubject<boolean>(false);
 
-  private isAuthenticated : boolean= false;
-  
-  login(){
-    
-  }
+    constructor() {}
+
+    // Appeler cette méthode pour changer l'état de connexion
+    setLoggedIn(value: boolean) {
+        this.isLoggedIn.next(value);
+    }
+
+    // Observable pour accéder à l'état de connexion
+    getLoggedIn(): Observable<boolean> {
+        return this.isLoggedIn.asObservable();
+    }
 }
+  

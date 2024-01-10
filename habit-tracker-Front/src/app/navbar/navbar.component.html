@@ -28,13 +28,23 @@
                     </ul>
                 </a>
             </div>
+                <!-- Contenu affiché lorsque l'utilisateur est connecté -->
+                <div *ngIf="isLoggedIn; else notLoggedIn">
+                    <span class="self-center text-xs font-semibold whitespace-nowrap dark:text-white">{{ username }}</span>
+                    <button class="text-gray-800 dark:text-white hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-bold rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-1  dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800"(click)="logout()">Disconnect</button>
+                </div>
+                <!-- Fin du contenu affiché lorsque l'utilisateur est connecté -->
+
+                
             
+            <ng-template #notLoggedIn>
             <div class="flex items-center lg:order-2">
                 <a href="#" class="text-gray-800 dark:text-white hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-bold rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-1  dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800">Log in</a>
                 <a href="#" class="text-gray-700 bg-primary hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-bold rounded-full text-sm px-5 lg:px-5 py-1 lg:py-1 mr-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800">Sign Up</a>
             </div>
+            </ng-template>
             <div class="justify-start w-full lg:flex lg:w-auto lg:order-1" id="mobile-menu-2">
-                
+            
             </div>
         </div>
     </nav>

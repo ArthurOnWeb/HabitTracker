@@ -2,7 +2,7 @@ export class Habit {
     id: string;
     username: string;
     habitName: string;
-    frequency: string;
+    frequency: number[];
     description: string;
     history: string[];
   
@@ -10,7 +10,7 @@ export class Habit {
       id: string, 
       username: string,
       habitName: string,
-      frequency: string,
+      frequency: number[],
       description: string,
     ) {
       this.id = id;

@@ -3,7 +3,7 @@ import { FormsModule, NgForm } from '@angular/forms';
 import { UserService } from '../user.service';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
-
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-login',
@@ -18,26 +18,23 @@ export class LoginComponent {
   password = "";
   errorMessage! : string;
 
-  constructor(private userService: UserService, private router: Router) {}
-  
+constructor(private userService: UserService, private router: Router, private authService: AuthService) {}
   
 
-  login(): void {
-    this.userService.login(this.username, this.password)
-      .subscribe(
-        (response: any) => {
-          localStorage.setItem('token', response.token);
-          localStorage.setItem('username',this.username);
-          this.router.navigate(['/home-page']);
+login(): void {
+  this.userService.login(this.username, this.password).subscribe(
+    (response: any) => {
+      localStorage.setItem('token', response.token);
+      localStorage.setItem('username', this.username);
+      this.authService.setLoggedIn(true);  // Met à jour l'état de connexion
+      this.router.navigate(['/home-page']);
+    },
+    (error) => {
+      console.error('Login failed:', error);
+      this.errorMessage = "Username or password is incorrect";
+      console.log(this.errorMessage);
+    }
+  );
+}
 
-        },
-        (error) => {
-          console.error('Login failed:', error);
-          
-          
-          this.errorMessage = "Username or password is incorrect";
-          console.log(this.errorMessage)
-        }
-      );
-  }
 }
