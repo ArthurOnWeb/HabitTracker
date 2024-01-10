@@ -29,4 +29,8 @@ export class HabitService {
     const body = {date};
     return this.http.post(url,body);
   }
+  getHabitById(habitId: string): Observable<Habit> {
+    const url = `${this.baseUrl}/getHabitById/${habitId}`;
+    return this.http.get<Habit>(url);
+  }
 }
