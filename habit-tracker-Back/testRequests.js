@@ -111,7 +111,21 @@ const updateData = {
   description: 'Description mise à jour'
 };
 
-updateHabit(username, habitId, updateData);
+async function testGetHabitById() {
+  const habitId = '659f0ca157327ac37f48f035'; // Remplacez par l'ID de l'habitude que vous souhaitez récupérer
+  const url = `http://localhost:3000/api/getHabitById/${habitId}`;
+
+  try {
+    const response = await axios.get(url);
+    console.log('Habitude récupérée:', response.data);
+  } catch (error) {
+    console.error('Erreur lors de la récupération de l\'habitude:', error.response.data);
+  }
+}
+
+testGetHabitById();
+
+// updateHabit(username, habitId, updateData);
 
 
 
@@ -120,5 +134,5 @@ updateHabit(username, habitId, updateData);
 // createUser();// deleteHabit();
 // checkPassword();
 // createHabit();
-getHabits();
+// getHabits();
 // addDateToHistory();
