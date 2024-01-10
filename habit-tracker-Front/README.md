@@ -1,5 +1,5 @@
-ajout
-modification
+
+modification, input date
 streak
 dire que tu as fait la tache
 

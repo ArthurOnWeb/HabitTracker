@@ -6,8 +6,12 @@ import { WeeklyComponent } from './weekly/weekly.component';
 import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
 import { OverallComponent } from './overall/overall.component';
 import { HabitFormComponent } from './habit-form/habit-form.component';
+import path from 'path';
+import { DetailHabitComponent } from './detail-habit/detail-habit.component';
 
 export const routes: Routes = [
+
+    {path: 'habit/:id', component:DetailHabitComponent},
     {path: 'habit-form', component:HabitFormComponent},
     {path: 'weekly', component:WeeklyComponent},
     {path: 'home-page', component:HomepageComponent},

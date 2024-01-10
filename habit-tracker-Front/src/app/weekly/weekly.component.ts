@@ -20,8 +20,6 @@ export class WeeklyComponent implements OnInit {
   habits!: Habit[]; // Define a property to store the retrieved habits
   username: string | undefined; // Define a property to store the username
 
-  
-
   constructor(private habitService: HabitService, private userService: UserService, private router: Router) {}
 
   ngOnInit() {
@@ -49,9 +47,9 @@ export class WeeklyComponent implements OnInit {
 
   }
 
-  isInFrequency(day: string) : boolean{
+  isInFrequency(habit: Habit,day: string) : boolean{
 
-      if(this.days.includes(day)){
+      if(habit.frequency.includes(day)){
         return true;
       }
       return false;
