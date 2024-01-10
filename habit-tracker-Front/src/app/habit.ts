@@ -4,7 +4,7 @@ export class Habit {
     habitName: string;
     frequency: string[];
     description: string;
-    history: string[];
+    history: Date[];
   
     constructor(
       id: string, 

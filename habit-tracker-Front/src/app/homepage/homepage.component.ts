@@ -17,6 +17,7 @@ import { Habit } from '../habit';
 export class HomepageComponent implements OnInit {
   habits!: Habit[]; // Define a property to store the retrieved habits
   username: string | undefined; // Define a property to store the username
+  today: Date = new Date(); // Define a property to store today's date
 
   constructor(private habitService: HabitService, private userService: UserService, private router: Router) {}
 
@@ -41,7 +42,19 @@ export class HomepageComponent implements OnInit {
         console.error('Error retrieving habits:', error);
       }
     );
-
-
+    }
+  addDateToHabit(habitId: string): void {
+    this.habitService.addDateToHistory(habitId, this.today).subscribe(
+      (response) => {
+        // Handle the successful addition here
+        console.log('Date added successfully', response);
+        // You might want to refresh the habits list or update the UI
+        this.getHabit();
+      },
+      (error) => {
+        // Handle any errors here
+        console.error('Error adding date to habit:', error);
+      }
+    );
   }
 }
