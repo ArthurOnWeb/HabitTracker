@@ -1,0 +1,43 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body class="flex flex-col">
+   <app-navbar></app-navbar>
+   <div class="flex flex-col mt-10 mx-auto w-4/5">
+        <a href="#" class="flex ml-auto">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+            </svg>
+            <span >Add a habit</span>
+        </a>
+        
+
+        <!--Div du rectangle -->
+        <div class="flex flex-col justify-between bg-primary opacity-70 border border-black mt-10 rounded-lg h-[16rem] cursor-pointer hover:opacity-60 transition ease-out duration-150 ">
+            
+            <!--Div du haut-->
+            <div class="flex justify-between">
+                <span class="flex text-stone-300 font-bold m-3">Aller à la salle</span>
+                <span class="flex text-stone-300 font-bold m-3">3 times a week</span>
+
+            </div>
+            
+            <!--Div du bas-->
+            <div class="flex justify-between">
+                <div *ngFor='let day of days' class="flex flex-col m-9">
+                    <span class="flex text-stone-300 ml-2">
+                        {{day}}
+                    </span>
+                    <div class="w-12 h-12 border border-rose-600 rounded-full">
+                        
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+   </div> 
+</body>
+</html>
