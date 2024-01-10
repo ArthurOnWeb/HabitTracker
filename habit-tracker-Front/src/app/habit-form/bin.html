@@ -59,3 +59,11 @@
     </section>
 </body>
 </html>
+
+
+<div *ngFor="let day of days">
+    <input type="checkbox" id="{{day}}Checkbox" name="{{day}}Checkbox" class="check-input custom-control-input" formControlName="{{day}}Checkbox"/>
+    <label for="{{day}}Checkbox" class="flex checkbox custom-control-label bg-primary opacity-70 justify-center items-center">
+        <span>{{day}}</span>
+    </label> 
+</div>

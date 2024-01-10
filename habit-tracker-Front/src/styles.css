@@ -9,3 +9,9 @@
 body {
     @apply font-custom; 
   }
+
+@layer utilities {
+  .select-none {
+    user-select: none;
+  }
+}
