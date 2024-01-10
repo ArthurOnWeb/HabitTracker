@@ -20,7 +20,7 @@ export class DetailHabitComponent implements OnInit{
   ngOnInit(): void {
     const habitId: string|null = this.route.snapshot.paramMap.get('id');
     if(habitId){
-      
+      this.habitService.getHabitById(habitId);
     }
   }
 
