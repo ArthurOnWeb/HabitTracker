@@ -93,11 +93,32 @@ async function addDateToHistory() {
   }
 }
 
+async function updateHabit(username, habitId, updateData) {
+  try {
+    const response = await axios.patch(`http://localhost:3000/api/updateHabit/${username}/${habitId}`, updateData);
+    console.log('Réponse du serveur:', response.data);
+  } catch (error) {
+    console.error('Erreur lors de la mise à jour de l\'habitude:', error.response ? error.response.data : error.message);
+  }
+}
+
+// Exemple d'utilisation
+const username = 'John'; // Remplacer par le nom d'utilisateur réel
+const habitId = '659e8884cc4551be5b1582df'; // Remplacer par l'ID de l'habitude réel
+const updateData = {
+  habitName: 'tuer modifiable',
+  frequency: '3 jours',
+  description: 'Description mise à jour'
+};
+
+updateHabit(username, habitId, updateData);
+
+
 
 
 // Exécuter les requêtes de test
 // createUser();// deleteHabit();
 // checkPassword();
 // createHabit();
-// getHabits();
-addDateToHistory();
+getHabits();
+// addDateToHistory();

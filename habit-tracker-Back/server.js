@@ -322,7 +322,53 @@ app.post('/api/addDateToHistory/:habitId', async (req, res) => {
   }
 });
 
+// Endpoint pour modifier une habitude
+app.patch('/api/updateHabit/:username/:habitId', async (req, res) => {
+  const { username, habitId } = req.params;
+  const updateData = req.body;
 
+  const uri = await readMongoDBUri();
+  const client = new MongoClient(uri);
+
+  try {
+    await client.connect();
+
+    const arattanavongDB = client.db("arattanavong");
+    const userCollection = arattanavongDB.collection("User");
+    const habitCollection = arattanavongDB.collection("Habits");
+
+    // Vérifier si l'utilisateur existe
+    const user = await userCollection.findOne({ username: username });
+    if (!user) {
+      res.status(404).json({ error: 'Utilisateur non trouvé' });
+      return;
+    }
+
+    // Vérifier si l'habitude existe
+    const habit = await habitCollection.findOne({ _id: new ObjectId(habitId), username: username });
+    if (!habit) {
+      res.status(404).json({ error: 'Habitude non trouvée' });
+      return;
+    }
+
+    // Mise à jour de l'habitude
+    const result = await habitCollection.updateOne(
+      { _id: new ObjectId(habitId)},
+      { $set: updateData }
+    );
+
+    if (result.modifiedCount === 0) {
+      res.status(400).json({ error: 'Aucune modification effectuée' });
+    } else {
+      res.status(200).json({ message: 'Habitude mise à jour avec succès' });
+    }
+  } catch (e) {
+    console.error(e);
+    res.status(500).json({ error: 'Erreur interne du serveur' });
+  } finally {
+    await client.close();
+  }
+});
 
 
 // Démarrer le serveur

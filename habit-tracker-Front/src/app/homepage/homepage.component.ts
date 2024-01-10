@@ -7,6 +7,7 @@ import { OnInit } from '@angular/core';
 import { stringify } from 'querystring';
 import { UserService } from '../user.service';
 import { Habit } from '../habit';
+
 @Component({
   selector: 'app-homepage',
   standalone: true,
