@@ -17,14 +17,14 @@ import { Habit } from '../habit';
 export class HomepageComponent implements OnInit {
   habits!: Habit[]; // Define a property to store the retrieved habits
   username: string | undefined; // Define a property to store the username
-  today: Date = new Date(); // Define a property to store today's date
+  today!: Date; // Define a property to store today's date
 
   constructor(private habitService: HabitService, private userService: UserService, private router: Router) {}
 
   ngOnInit() {
     // Call the getHabit function when the component initializes
     this.getHabit();
-    
+    this.today = new Date();
   }
 
   getHabit() {
@@ -57,4 +57,9 @@ export class HomepageComponent implements OnInit {
       }
     );
   }
+
+  goToHabit(habit: Habit) {
+    this.router.navigate(['/habit', habit.id])
+  }
+  
 }
