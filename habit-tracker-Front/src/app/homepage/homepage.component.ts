@@ -5,6 +5,8 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { OnInit } from '@angular/core';
 import { stringify } from 'querystring';
+import { UserService } from '../user.service';
+import { Habit } from '../habit';
 @Component({
   selector: 'app-homepage',
   standalone: true,
@@ -12,14 +14,15 @@ import { stringify } from 'querystring';
   templateUrl: './homepage.component.html',
 })
 export class HomepageComponent implements OnInit {
-  habits!: any[]; // Define a property to store the retrieved habits
+  habits!: Habit[]; // Define a property to store the retrieved habits
   username: string | undefined; // Define a property to store the username
 
-  constructor(private habitService: HabitService, private router: Router) {}
+  constructor(private habitService: HabitService, private userService: UserService, private router: Router) {}
 
   ngOnInit() {
     // Call the getHabit function when the component initializes
     this.getHabit();
+    
   }
 
   getHabit() {
@@ -28,14 +31,16 @@ export class HomepageComponent implements OnInit {
 
     // Call the getHabits method from your HabitService
     this.habitService.getHabits(this.username).subscribe(
-      (data) => {
+      (response : Habit[]) => {
         // Successfully retrieved habits, store them in the habits property
-        this.habits = data;
+        this.habits = response;
       },
       (error) => {
         // Handle errors here
         console.error('Error retrieving habits:', error);
       }
     );
+
+
   }
 }

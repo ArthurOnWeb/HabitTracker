@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { Habit } from './habit';
 
 @Injectable({
   providedIn: 'root'
@@ -19,9 +20,9 @@ export class HabitService {
     const url = `${this.baseUrl}/deleteHabit/${habitId}`;
     return this.http.delete(url);
   }
-  getHabits(username:string): Observable<any>{
+  getHabits(username:string): Observable<Habit[]>{
     const url = `${this.baseUrl}/getHabits/${username}`;
-    return this.http.get(url);
+    return this.http.get<Habit[]>(url);
   }
   addDateToHistory(habitId:string,date:string):Observable<any>{
     const url=`${this.baseUrl}/addDateToHistory/${habitId}`;

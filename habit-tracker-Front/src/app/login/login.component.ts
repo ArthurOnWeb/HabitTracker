@@ -20,13 +20,6 @@ export class LoginComponent {
 
   constructor(private userService: UserService, private router: Router) {}
   
-  // createUser() {
-  //   this.apiService.createUser(this.username, this.email, this.password).subscribe(
-  //     response => console.log(response),
-  //     error => console.error(error)
-  //   );
-  // }
-
   
 
   login(): void {
