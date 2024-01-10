@@ -6,7 +6,14 @@ import { BehaviorSubject, Observable } from 'rxjs';
 export class AuthService {
     private isLoggedIn = new BehaviorSubject<boolean>(false);
 
-    constructor() {}
+    constructor() {
+        this.checkInitialLoginState();
+      }
+      private checkInitialLoginState() {
+        const token = localStorage.getItem('token');
+        this.isLoggedIn.next(!!token);
+      }
+      
 
     // Appeler cette méthode pour changer l'état de connexion
     setLoggedIn(value: boolean) {

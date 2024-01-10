@@ -1,7 +1,7 @@
 ajout
 modification
-navbar grace à authentification
 streak
+dire que tu as fait la tache
 
 bonus: 
 completed
