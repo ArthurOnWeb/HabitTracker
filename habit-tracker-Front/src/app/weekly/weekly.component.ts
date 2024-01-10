@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NavbarComponent } from '../navbar/navbar.component';
-import { NgFor } from '@angular/common';
+import { NgFor, NgIf } from '@angular/common';
 import { Habit } from '../habit';
 import { HabitService } from '../habit.service';
 import { UserService } from '../user.service';
@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-weekly',
   standalone: true,
-  imports: [NavbarComponent, NgFor],
+  imports: [NavbarComponent, NgFor, NgIf],
   templateUrl: './weekly.component.html',
   styleUrl: './weekly.component.css'
 })
@@ -19,6 +19,8 @@ export class WeeklyComponent implements OnInit {
 
   habits!: Habit[]; // Define a property to store the retrieved habits
   username: string | undefined; // Define a property to store the username
+
+  
 
   constructor(private habitService: HabitService, private userService: UserService, private router: Router) {}
 
@@ -44,6 +46,15 @@ export class WeeklyComponent implements OnInit {
       }
     );
 
+
+  }
+
+  isInFrequency(day: string) : boolean{
+
+      if(this.days.includes(day)){
+        return true;
+      }
+      return false;
   }
   
 }

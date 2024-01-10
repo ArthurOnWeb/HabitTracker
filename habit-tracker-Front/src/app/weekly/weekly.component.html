@@ -20,7 +20,7 @@
             <!--Div du haut-->
             <div class="flex justify-between">
                 <span class="flex text-stone-300 font-bold m-3">{{habit.habitName}}</span>
-                <span class="flex text-stone-300 font-bold m-3">3 times a week</span>
+                <span class="flex text-stone-300 font-bold m-3"></span>
 
             </div>
             
@@ -30,8 +30,8 @@
                     <span class="flex text-stone-300 ml-2">
                         {{day}}
                     </span>
-                    <div class="w-12 h-12 border border-rose-600 rounded-full">
-                    </div>
+                    <div *ngIf="isInFrequency(day)" class="w-12 h-12 bg-rose-600 border border-rose-600 rounded-full"></div>
+                    <div *ngIf="!isInFrequency(day)" class="w-12 h-12 border border-rose-600 rounded-full"></div>
                 </div>
             </div>
         </div>

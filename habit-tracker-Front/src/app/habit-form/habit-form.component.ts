@@ -18,10 +18,10 @@ import { requireCheckboxesToBeCheckedValidator } from './require-chexboxes-to-be
   styleUrl: './habit-form.component.css'
 })
 export class HabitFormComponent implements OnInit{
-  days: string[] = ['M', 'Tu', 'W', 'Th', 'F', 'Sa', 'Su'];
+  days: string[] = ['Mon', 'Tue', 'Wes', 'Thu', 'Fri', 'Sat', 'Sun'];
 
   
-
+  frequency! : string[];
 
   nameHabit! : any;
 
@@ -31,13 +31,13 @@ export class HabitFormComponent implements OnInit{
     myInput: new FormControl('', [Validators.required]),
     // ...more form controls...
     myCheckboxGroup: new FormGroup({
-      MCheckbox: new FormControl(false),
-      TuCheckbox: new FormControl(false),
-      WCheckbox: new FormControl(false),
-      ThCheckbox: new FormControl(false),
-      FCheckbox: new FormControl(false),
-      SaCheckbox: new FormControl(false),
-      SuCheckbox: new FormControl(false),
+      MonCheckbox: new FormControl(false),
+      TueCheckbox: new FormControl(false),
+      WesCheckbox: new FormControl(false),
+      ThuCheckbox: new FormControl(false),
+      FriCheckbox: new FormControl(false),
+      SatCheckbox: new FormControl(false),
+      SunCheckbox: new FormControl(false),
 
     }, requireCheckboxesToBeCheckedValidator()),
     // ...more form controls...
@@ -55,12 +55,16 @@ export class HabitFormComponent implements OnInit{
   }
 
   onSubmit(){
+
+    const checkboxGroup = this.form.get('myCheckboxGroup') as FormGroup;
+
+    this.frequency = this.days.filter(day => checkboxGroup.get(`${day}Checkbox`)?.value);
     const myInput = this.form.get('myInput');
     if(this.form.get('myInput') != null){
       this.nameHabit = myInput?.value;
     }
    
-    this.habitService.createHabit(this.currentUserName, this.nameHabit, "3 fois", "10 jours", "hifendj").subscribe(
+    this.habitService.createHabit(this.currentUserName, this.nameHabit, this.frequency, "10 jours", "hifendj").subscribe(
       (response : any) => {
         this.router.navigate(['/home-page']);
       }

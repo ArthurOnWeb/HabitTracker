@@ -6,7 +6,9 @@ modifier le css pour la navbar
 implémenter les streak dans le back
 
 
+
 bonus: 
 completed
 overall
 darkmode
+
