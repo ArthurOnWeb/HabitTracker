@@ -33,8 +33,8 @@ export class HabitService {
     const url = `${this.baseUrl}/getHabitById/${habitId}`;
     return this.http.get<Habit>(url);
   }
-  updateHabit(username: string, habitId: string, updateData: any): Observable<any> {
+  updateHabit(username: string, habitId: string, updateName: any): Observable<any> {
     const url = `${this.baseUrl}/updateHabit/${username}/${habitId}`;
-    return this.http.patch(url, updateData);
+    return this.http.patch(url, updateName);
   }
 }

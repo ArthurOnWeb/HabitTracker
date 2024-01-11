@@ -357,10 +357,9 @@ app.post('/api/addDateToHistory/:habitId', async (req, res) => {
 });
 
 
-// Endpoint pour modifier une habitude
 app.patch('/api/updateHabit/:username/:habitId', async (req, res) => {
   const { username, habitId } = req.params;
-  const updateData = req.body;
+  const { habitName } = req.body; // Extraire uniquement habitName
 
   const uri = await readMongoDBUri();
   const client = new MongoClient(uri);
@@ -386,16 +385,16 @@ app.patch('/api/updateHabit/:username/:habitId', async (req, res) => {
       return;
     }
 
-    // Mise à jour de l'habitude
+    // Mise à jour uniquement de l'habitudeName
     const result = await habitCollection.updateOne(
       { _id: new ObjectId(habitId)},
-      { $set: updateData }
+      { $set: { habitName: habitName } }
     );
 
     if (result.modifiedCount === 0) {
       res.status(400).json({ error: 'Aucune modification effectuée' });
     } else {
-      res.status(200).json({ message: 'Habitude mise à jour avec succès' });
+      res.status(200).json({ message: 'Nom de l\'habitude mis à jour avec succès' });
     }
   } catch (e) {
     console.error(e);
