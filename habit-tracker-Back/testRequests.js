@@ -123,11 +123,28 @@ async function testGetHabitById() {
   }
 }
 
+async function testUpdateHabit() {
+  const username = 'John'; // Remplacez par le nom d'utilisateur approprié
+  const habitId = '659f494245aae542dcc58285'; // Remplacez par l'ID de l'habitude à mettre à jour
+  const newHabitName = 'New Habit Name'; // Le nouveau nom pour l'habitude
+
+  const url = `http://localhost:3000/api/updateHabit/${username}/${habitId}`; // Assurez-vous que l'URL correspond à votre configuration serveur
+
+  try {
+    const response = await axios.patch(url, { habitName: newHabitName });
+    console.log('Réponse du serveur:', response.data);
+  } catch (error) {
+    console.error('Erreur lors de la mise à jour de l\'habitude:', error.response.data);
+  }
+}
+
+testUpdateHabit();
+
 // Exécuter les requêtes de test
 // createUser();// deleteHabit();
 // checkPassword();
 // createHabit();
 // getHabits();
-addDateToHistory();
+// addDateToHistory();
 // testGetHabitById();
 // updateHabit(username, habitId, updateData);

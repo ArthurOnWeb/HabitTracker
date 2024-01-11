@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { UserService } from '../user.service';
 import { Router } from '@angular/router';
-
+import { AuthService } from '../auth.service';
 @Component({
   selector: 'app-sign-up',
   standalone: true,
@@ -17,7 +17,7 @@ export class SignUpComponent {
   confirmPassword ="";
   errorMessage ="";
 
-  constructor(private userService: UserService, private router: Router){}
+  constructor(private userService: UserService, private router: Router, private authService :AuthService){}
 
 
 
@@ -29,7 +29,9 @@ export class SignUpComponent {
         (response: any) => {
           console.log('User registered successfully');
           localStorage.setItem('token', response.token);
-          this.router.navigate(['/home-page'])
+          localStorage.setItem('username', this.username);
+          this.authService.setLoggedIn(true);  // Met à jour l'état de connexion
+          this.router.navigate(['/home-page']);
         },
         (error) => {
           console.log("Username : ",this.username)
