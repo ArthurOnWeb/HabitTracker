@@ -16,9 +16,7 @@ import { Router } from '@angular/router';
 export class WeeklyComponent implements OnInit {
 
   days : string[] = ["Mon", "Tue", "Wes", "Thu", "Fri", "Sat", "Sun"];
-
-  todayDate!: Date;
-
+  today!: Date; // Define a property to store today's date
   habits!: Habit[]; // Define a property to store the retrieved habits
   username: string | undefined; // Define a property to store the username
 
@@ -27,6 +25,7 @@ export class WeeklyComponent implements OnInit {
   ngOnInit() {
     // Call the getHabit function when the component initializes
     this.getHabit();
+    this.today = new Date('2024-01-11T00:00:00'); // Assurez-vous que le fuseau horaire est correct
     
   }
   
