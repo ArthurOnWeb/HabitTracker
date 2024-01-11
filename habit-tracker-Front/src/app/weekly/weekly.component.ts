@@ -47,7 +47,23 @@ export class WeeklyComponent implements OnInit {
 
 
   }
-
+  isDayChecked(habit: Habit, day: string): boolean {
+    const dayIndex = this.days.indexOf(day);
+    const todayIndex = this.today.getUTCDay();
+    const diff = (dayIndex + 1) - todayIndex;
+    const targetDate = new Date(this.today);
+    targetDate.setUTCDate(this.today.getUTCDate() + diff);
   
+    // Convertir targetDate en chaîne de date ISO pour la comparaison
+    const targetDateString = targetDate.toISOString().split('T')[0];
+  
+    // Vérifier si la date formatée est dans l'historique de l'habitude
+    return habit.history.some(historyDateString => {
+      // Convertissez la chaîne de l'historique en un objet Date avant de l'utiliser
+      const historyDateObject = new Date(historyDateString);
+      // Ensuite, comparez les chaînes ISO des dates
+      return historyDateObject.toISOString().split('T')[0] === targetDateString;
+    });
+  }
   
 }
