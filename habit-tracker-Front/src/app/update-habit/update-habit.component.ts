@@ -16,7 +16,7 @@ import { Habit } from '../habit';
 })
 export class UpdateHabitComponent implements OnInit{
 
-  currentUserName! : any;
+  currentUserName! : string | null;
 
   habit!: Habit
   
@@ -60,15 +60,15 @@ export class UpdateHabitComponent implements OnInit{
     this.habit.habitName = inputValue;
 
     console.log(this.habit.habitName)
-    
-   
-    this.habitService.updateHabit(this.currentUserName,this.habit._id, this.habit.habitName).subscribe(
-      (response : any) => {
+
+    const username = this.currentUserName ?? '';
+
+    this.habitService.updateHabit(username, this.habit._id, this.habit.habitName).subscribe(
+      (response: any) => {
         this.router.navigate(['/home-page']);
-      }
-      ,
-      (error : any) => {
-        console.log(error)
+      },
+      (error: any) => {
+        console.log(error);
       }
     );
   }
