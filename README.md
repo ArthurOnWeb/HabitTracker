@@ -7,8 +7,8 @@ Lancer le projet :
 6) ng serve -o
 
 Sur le site:
-Avant tout chose
--Se connecter (user de base username : John mdp : 1234)
+Avant tout chose : 
+- Se connecter (user de base username : John mdp : 1234)
 - Ou se créer un compte
 
 Conseil : "plier" svg (PolyHabitTracker) car très grand 
