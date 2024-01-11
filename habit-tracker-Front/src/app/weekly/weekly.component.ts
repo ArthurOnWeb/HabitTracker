@@ -47,6 +47,12 @@ export class WeeklyComponent implements OnInit {
 
 
   }
+
+
+  goToDetailHabit(habit: Habit){
+    this.router.navigate(['/habit', habit._id])
+  }
+
   isDayChecked(habit: Habit, day: string): boolean {
     const dayIndex = this.days.indexOf(day);
     const todayIndex = this.today.getUTCDay();

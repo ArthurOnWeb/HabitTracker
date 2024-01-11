@@ -14,31 +14,35 @@
         </a>
         
         <!--Div du rectangle -->
-        <div *ngFor="let habit of habits" class="flex flex-col justify-between bg-primary opacity-70 border border-black mt-10 rounded-lg h-[16rem] cursor-pointer hover:opacity-60 transition ease-out duration-150">
+        <div *ngFor="let habit of habits"  class="flex flex-col justify-between bg-primary opacity-70 border border-black mt-10 rounded-lg h-[16rem] cursor-pointer hover:opacity-60 transition ease-out duration-150">
             
-            <!--Div du haut-->
-            <div class="flex justify-between">
-                <span class="flex text-stone-300 font-bold m-3">{{habit.habitName}}</span>
-                <span class="flex text-stone-300 font-bold m-3"></span>
-            </div>
-            
-            <!--Div du bas-->
-            <div class="flex justify-between">
-                <div *ngFor='let day of days' class="flex flex-col m-9">
-                    <span class="flex text-stone-300 ml-2">
-                        {{day}}
-                    </span>
-                    <div *ngIf="!isDayChecked(habit,day)" class="flex justify-center items-center w-12 h-12 border border-rose-600 rounded-full">
-                        <!-- Conteneur vide si le jour n'est pas coché -->
-                    </div>
-                    <div *ngIf="isDayChecked(habit,day)" class="flex justify-center items-center w-12 h-12 bg-rose-600 border border-rose-600 rounded-full">
-                        <!-- SVG centré à l'intérieur de la div -->
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
-                        </svg>
+            <div (click)="goToDetailHabit(habit)">
+                 <!--Div du haut-->
+                <div class="flex justify-between">
+                    <span class="flex text-stone-300 font-bold m-3">{{habit.habitName}}</span>
+                    <span class="flex text-stone-300 font-bold m-3"></span>
+                </div>
+                
+                <!--Div du bas-->
+                <div class="flex justify-between">
+                    <div *ngFor='let day of days' class="flex flex-col m-9">
+                        <span class="flex text-stone-300 ml-2">
+                            {{day}}
+                        </span>
+                        <div *ngIf="!isDayChecked(habit,day)" class="flex justify-center items-center w-12 h-12 border border-rose-600 rounded-full">
+                            <!-- Conteneur vide si le jour n'est pas coché -->
+                        </div>
+                        <div *ngIf="isDayChecked(habit,day)" class="flex justify-center items-center w-12 h-12 bg-rose-600 border border-rose-600 rounded-full">
+                            <!-- SVG centré à l'intérieur de la div -->
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+                            </svg>
+                        </div>
                     </div>
                 </div>
             </div>
+
+           
         </div>
    </div> 
 </body>
