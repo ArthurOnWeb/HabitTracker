@@ -10,9 +10,9 @@ export class HabitService {
   private baseUrl = 'http://localhost:3000/api'; // Assure-toi de mettre le bon port si tu as changé le port du serveur
 
   constructor(private http: HttpClient) {}
-  createHabit(username: string, habitName: string, frequency: string[], duration: string, description: string): Observable<any> {
+  createHabit(username: string, habitName: string): Observable<any> {
     const url = `${this.baseUrl}/createHabit/${username}`;
-    const body = { habitName, frequency, duration, description };
+    const body = { habitName};
     return this.http.post(url, body);
   }
   

@@ -65,13 +65,30 @@ export class DetailHabitComponent implements OnInit{
     );
   }
 
+  deleteHabit(){
+    this.habitService.deleteHabit(this.habit._id)
+      .subscribe(
+        (response) => {
+          console.log("Delete Success");
+          this.router.navigate(['/home-page'])
+        },
+        (error) => {
+          // Handle any errors here
+          console.error('Error to delete habit:', error);
+          
+        }
+
+      )
+  }
+
+  goToUpdateHabit(){
+    this.router.navigate(['/update', this.habit._id])
+  }
+
   onSubmit(){
     const inputValue = this.myInput?.value;
     this.currentDate = inputValue;
     const [day, month, year] = this.currentDate.split('/');
-    console.log(day);
-    console.log(month);
-    console.log(year)
     const formattedDate = new Date(`${year}-${month}-${day}`)
     this.addDateToHabit(this.habit._id, formattedDate);
     
