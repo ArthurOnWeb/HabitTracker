@@ -8,9 +8,12 @@ import { OverallComponent } from './overall/overall.component';
 import { HabitFormComponent } from './habit-form/habit-form.component';
 import path from 'path';
 import { DetailHabitComponent } from './detail-habit/detail-habit.component';
+import { UpdateHabitComponent } from './update-habit/update-habit.component';
 
 export const routes: Routes = [
 
+
+    {path: 'update/:id', component:UpdateHabitComponent},
     {path: 'habit/:id', component:DetailHabitComponent},
     {path: 'habit-form', component:HabitFormComponent},
     {path: 'weekly', component:WeeklyComponent},
