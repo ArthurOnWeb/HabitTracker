@@ -77,7 +77,7 @@ async function getHabits() {
 }
 
 async function addDateToHistory() {
-  const habitId = '658b0e06f49941fd414398f6';
+  const habitId = '659f0ca157327ac37f48f035';
   const date = '2023-01-10';
 
   try {
@@ -123,16 +123,11 @@ async function testGetHabitById() {
   }
 }
 
-testGetHabitById();
-
-// updateHabit(username, habitId, updateData);
-
-
-
-
 // Exécuter les requêtes de test
 // createUser();// deleteHabit();
 // checkPassword();
 // createHabit();
 // getHabits();
-// addDateToHistory();
+addDateToHistory();
+// testGetHabitById();
+// updateHabit(username, habitId, updateData);
