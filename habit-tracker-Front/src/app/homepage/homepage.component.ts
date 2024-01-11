@@ -22,9 +22,11 @@ export class HomepageComponent implements OnInit {
   constructor(private habitService: HabitService, private userService: UserService, private router: Router) {}
 
   ngOnInit() {
-    // Call the getHabit function when the component initializes
+    // Appel de la fonction getHabit lors de l'initialisation du composant
     this.getHabit();
-    this.today = new Date();
+
+    // Définir la date d'aujourd'hui au 11 janvier 2024
+    this.today = new Date('2024-01-11T00:00:00'); // Assurez-vous que le fuseau horaire est correct
   }
 
   getHabit() {

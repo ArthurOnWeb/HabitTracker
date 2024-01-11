@@ -77,7 +77,7 @@ async function getHabits() {
 }
 
 async function addDateToHistory() {
-  const habitId = '658b0e06f49941fd414398f6';
+  const habitId = '659f0ca157327ac37f48f035';
   const date = '2023-01-10';
 
   try {
@@ -111,14 +111,23 @@ const updateData = {
   description: 'Description mise à jour'
 };
 
-updateHabit(username, habitId, updateData);
+async function testGetHabitById() {
+  const habitId = '659f0ca157327ac37f48f035'; // Remplacez par l'ID de l'habitude que vous souhaitez récupérer
+  const url = `http://localhost:3000/api/getHabitById/${habitId}`;
 
-
-
+  try {
+    const response = await axios.get(url);
+    console.log('Habitude récupérée:', response.data);
+  } catch (error) {
+    console.error('Erreur lors de la récupération de l\'habitude:', error.response.data);
+  }
+}
 
 // Exécuter les requêtes de test
 // createUser();// deleteHabit();
 // checkPassword();
 // createHabit();
-getHabits();
-// addDateToHistory();
+// getHabits();
+addDateToHistory();
+// testGetHabitById();
+// updateHabit(username, habitId, updateData);
