@@ -49,12 +49,6 @@ export class WeeklyComponent implements OnInit {
 
   }
 
-  isInFrequency(habit: Habit,day: string) : boolean{
-
-      if(habit.frequency.includes(day)){
-        return true;
-      }
-      return false;
-  }
+  
   
 }

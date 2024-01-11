@@ -30,17 +30,7 @@ export class HabitFormComponent implements OnInit{
   form = new FormGroup({
     myInput: new FormControl('', [Validators.required]),
     // ...more form controls...
-    myCheckboxGroup: new FormGroup({
-      MonCheckbox: new FormControl(false),
-      TueCheckbox: new FormControl(false),
-      WesCheckbox: new FormControl(false),
-      ThuCheckbox: new FormControl(false),
-      FriCheckbox: new FormControl(false),
-      SatCheckbox: new FormControl(false),
-      SunCheckbox: new FormControl(false),
 
-    }),
-    // ...more form controls...
     
   });
 
@@ -56,9 +46,8 @@ export class HabitFormComponent implements OnInit{
 
   onSubmit(){
 
-    const checkboxGroup = this.form.get('myCheckboxGroup') as FormGroup;
 
-    this.frequency = this.days.filter(day => checkboxGroup.get(`${day}Checkbox`)?.value);
+    
     const myInput = this.form.get('myInput');
     if(this.form.get('myInput') != null){
       this.nameHabit = myInput?.value;

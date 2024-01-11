@@ -18,6 +18,7 @@ export class HomepageComponent implements OnInit {
   habits!: Habit[]; // Define a property to store the retrieved habits
   username: string | undefined; // Define a property to store the username
   today!: Date; // Define a property to store today's date
+  done!: number;
 
   constructor(private habitService: HabitService, private userService: UserService, private router: Router) {}
 

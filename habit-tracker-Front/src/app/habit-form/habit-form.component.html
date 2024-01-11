@@ -4,8 +4,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
-<body class="bg-gray-50">
-    <div class="flex flex-col  justify-center items-center">
+<body>
+    <div class="flex flex-col justify-center items-center">
         <div class="flex items-center mb-3 px-6 py-8">
             <svg width="20" height="20" viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <rect width="11" height="11" fill="url(#pattern0)"/>
@@ -21,36 +21,16 @@
         </div>
         <div class="flex flex-col items-center bg-white rounded-lg shadow dark:border w-[25rem] h-[25rem]">
             <h1 class="text-xl font-bold leading-tight tracking-tight m-7 text-gray-900 md:text-2xl dark:text-white">
-                Update a habit 
+                Add a habit 
             </h1>
             <form class="flex flex-col m-7 w-4/5" [formGroup]="form" (ngSubmit)="onSubmit() ">
                 <div class="form-group w-full">
                     <label class="font-bold">Enter a name of habit :</label>
                     <input type="text" name="habit-name" id="habit-name" class="form-control bg-gray-50 mt-2 border border-gray-300 w-full text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required   formControlName="myInput">
                     <div class="invalid-feedback text-red-600 text-xs" *ngIf="form.controls['myInput'].errors">Please insert a habits</div>
-                </div> 
+                
 
-                <div class="form-group" formGroupName="myCheckboxGroup">
-                    <span class="block font-bold mb-2 mt-4 text-sm text-gray-900 dark:text-white">
-                      On these days
-                    </span>
-                  
-                    <div>
-                        <div class="custom-control custom-checkbox flex">
-                            <div class="flex justify-between w-full">
-                                <!-- Loop through the days to create checkboxes -->
-                                <div *ngFor="let day of days" class="mr-4">
-                                <input type="checkbox" id="{{day}}Checkbox" name="{{day}}Checkbox" class="check-input custom-control-input" formControlName="{{day}}Checkbox" />
-                                <label for="{{day}}Checkbox" class="flex checkbox custom-control-label bg-primary opacity-70 justify-center items-center">
-                                    <span>{{day}}</span>
-                                </label>
-                                </div>
-                        </div> 
-                    </div>
-                    
-                  
-                      <div class="invalid-feedback text-red-600 mt-10 text-xs" *ngIf="form.controls['myCheckboxGroup'].errors && form.controls['myCheckboxGroup'].errors['requireOneCheckboxToBeChecked']">At least one checkbox is required to check</div>
-                      </div>
+                
                   
                     <button type="submit" class="w-full text-white bg-primary mt-20 hover:bg-primary focus:ring-4 focus:outline-none focus:ring-primary font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary dark:hover:bg-primary dark:focus:ring-primary" [hidden]="!form.valid">Submit</button>
                 </div>
