@@ -53,7 +53,7 @@ export class HabitFormComponent implements OnInit{
       this.nameHabit = myInput?.value;
     }
    
-    this.habitService.createHabit(this.currentUserName, this.nameHabit, this.frequency, "10 jours", "hifendj").subscribe(
+    this.habitService.createHabit(this.currentUserName, this.nameHabit, "10 jours", "hifendj").subscribe(
       (response : any) => {
         this.router.navigate(['/home-page']);
       }

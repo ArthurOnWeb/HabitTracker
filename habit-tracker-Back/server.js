@@ -205,7 +205,6 @@ app.post('/api/createHabit/:username', async (req, res) => {
     const habit = {
       username: username,
       habitName: habitName,
-      frequency: frequency,
       description:description,
       history:[]
     };
