@@ -53,12 +53,12 @@ export class DetailHabitComponent implements OnInit{
   addDateToHabit(habitId: string,currentDate: Date): void {
     this.habitService.addDateToHistory(habitId, currentDate).subscribe(
       (response) => {
-        // Handle the successful addition here
+        
         console.log('Date added successfully', response);
         this.router.navigate(['/home-page'])
       },
       (error) => {
-        // Handle any errors here
+        
         console.error('Error adding date to habit:', error);
         this.errorMessage = "Error with add done date"
       }
@@ -73,7 +73,7 @@ export class DetailHabitComponent implements OnInit{
           this.router.navigate(['/home-page'])
         },
         (error) => {
-          // Handle any errors here
+          
           console.error('Error to delete habit:', error);
           
         }

@@ -44,7 +44,7 @@ export class SignUpComponent {
             this.errorMessage = error.error.error;
           }
           
-          // Gérer les erreurs d'inscription ici (affichage d'un message d'erreur, etc.)
+          
         }
       );
   }

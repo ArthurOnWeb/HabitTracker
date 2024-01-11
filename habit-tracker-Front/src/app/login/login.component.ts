@@ -26,7 +26,7 @@ login(): void {
     (response: any) => {
       localStorage.setItem('token', response.token);
       localStorage.setItem('username', this.username);
-      this.authService.setLoggedIn(true);  // Met à jour l'état de connexion
+      this.authService.setLoggedIn(true);  
       this.router.navigate(['/home-page']);
     },
     (error) => {
