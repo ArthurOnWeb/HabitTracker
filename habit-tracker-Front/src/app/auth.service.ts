@@ -15,12 +15,11 @@ export class AuthService {
       }
       
 
-    // Appeler cette méthode pour changer l'état de connexion
+    
     setLoggedIn(value: boolean) {
         this.isLoggedIn.next(value);
     }
 
-    // Observable pour accéder à l'état de connexion
     getLoggedIn(): Observable<boolean> {
         return this.isLoggedIn.asObservable();
     }

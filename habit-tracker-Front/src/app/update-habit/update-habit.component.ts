@@ -29,6 +29,9 @@ export class UpdateHabitComponent implements OnInit{
   constructor(private habitService : HabitService, private userService: UserService, private router: Router, private route: ActivatedRoute, private fb: FormBuilder){}
 
   ngOnInit(): void {
+
+    this.currentUserName = localStorage.getItem('username')
+
     const habitId: string|null = this.route.snapshot.paramMap.get('id');
     if(habitId){
       this.habitService.getHabitById(habitId)
@@ -53,10 +56,13 @@ export class UpdateHabitComponent implements OnInit{
   onSubmit(){
 
 
-    
+    const inputValue = this.myInput?.value;
+    this.habit.habitName = inputValue;
+
+    console.log(this.habit.habitName)
     
    
-    this.habitService.createHabit(this.currentUserName, this.habit.habitName).subscribe(
+    this.habitService.updateHabit(this.currentUserName,this.habit._id, this.habit.habitName).subscribe(
       (response : any) => {
         this.router.navigate(['/home-page']);
       }
