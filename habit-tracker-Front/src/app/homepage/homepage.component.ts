@@ -43,20 +43,7 @@ export class HomepageComponent implements OnInit {
       }
     );
     }
-  addDateToHabit(habitId: string): void {
-    this.habitService.addDateToHistory(habitId, this.today).subscribe(
-      (response) => {
-        // Handle the successful addition here
-        console.log('Date added successfully', response);
-        // You might want to refresh the habits list or update the UI
-        this.getHabit();
-      },
-      (error) => {
-        // Handle any errors here
-        console.error('Error adding date to habit:', error);
-      }
-    );
-  }
+  
 
   goToHabit(habit: Habit) {
     

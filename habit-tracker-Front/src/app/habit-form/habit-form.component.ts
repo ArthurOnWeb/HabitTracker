@@ -39,7 +39,7 @@ export class HabitFormComponent implements OnInit{
       SatCheckbox: new FormControl(false),
       SunCheckbox: new FormControl(false),
 
-    }, requireCheckboxesToBeCheckedValidator()),
+    }),
     // ...more form controls...
     
   });

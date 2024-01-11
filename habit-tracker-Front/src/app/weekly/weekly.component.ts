@@ -17,6 +17,8 @@ export class WeeklyComponent implements OnInit {
 
   days : string[] = ["Mon", "Tue", "Wes", "Thu", "Fri", "Sat", "Sun"];
 
+  todayDate!: Date;
+
   habits!: Habit[]; // Define a property to store the retrieved habits
   username: string | undefined; // Define a property to store the username
 
