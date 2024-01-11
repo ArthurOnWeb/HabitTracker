@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { HabitService } from '../habit.service';
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgFor, NgIf } from '@angular/common';
 import { Router } from '@angular/router';
 import { OnInit } from '@angular/core';
 import { stringify } from 'querystring';
@@ -11,7 +11,7 @@ import { Habit } from '../habit';
 @Component({
   selector: 'app-homepage',
   standalone: true,
-  imports: [NavbarComponent,CommonModule],
+  imports: [NavbarComponent,CommonModule, NgFor, NgIf],
   templateUrl: './homepage.component.html',
 })
 export class HomepageComponent implements OnInit {
@@ -26,7 +26,8 @@ export class HomepageComponent implements OnInit {
     this.getHabit();
 
     // Définir la date d'aujourd'hui au 11 janvier 2024
-    this.today = new Date('2024-01-11T00:00:00'); // Assurez-vous que le fuseau horaire est correct
+    this.today = new Date();; // Assurez-vous que le fuseau horaire est correct
+    console.log(this.today)
   }
 
   getHabit() {
@@ -45,20 +46,21 @@ export class HomepageComponent implements OnInit {
       }
     );
     }
-  addDateToHabit(habitId: string): void {
-    this.habitService.addDateToHistory(habitId, this.today).subscribe(
-      (response) => {
-        // Handle the successful addition here
-        console.log('Date added successfully', response);
-        // You might want to refresh the habits list or update the UI
-        this.getHabit();
-      },
-      (error) => {
-        // Handle any errors here
-        console.error('Error adding date to habit:', error);
-      }
-    );
-  }
+  
+
+    isTodayInHistory(habit : Habit): boolean {
+      // Formater la date actuelle pour correspondre au format de votre array history
+      const formattedToday = new Date(this.today.getFullYear(), this.today.getMonth(), this.today.getDate());
+
+      // Vérifier si la date actuelle est incluse dans l'array history
+      return habit.history.some(date => {
+        // Vérifier si date est un objet Date
+        const dateObject = date instanceof Date ? date : new Date(date);
+
+        const formattedDate = new Date(dateObject.getFullYear(), dateObject.getMonth(), dateObject.getDate());
+        return formattedDate.getTime() === formattedToday.getTime();
+      });
+    }
 
   goToHabit(habit: Habit) {
     

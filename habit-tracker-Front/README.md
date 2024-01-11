@@ -1,11 +1,11 @@
+Afficher jours fait 
 
-modification, input date
-streak
 implémenter les streak dans le back
 
 
 
 bonus: 
+streak
 completed
 overall
 darkmode
