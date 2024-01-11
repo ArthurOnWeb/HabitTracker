@@ -30,7 +30,10 @@
                     <span class="flex text-stone-300 ml-2">
                         {{day}}
                     </span>
-                    <div *ngIf="isInFrequency(habit,day)" class="w-12 h-12 bg-rose-600 border border-rose-600 rounded-full">
+                    <div *ngIf="isInFrequency(habit,day) && !isDayChecked(habit,day)" class="w-12 h-12 bg-rose-600 border border-rose-600 rounded-full">
+                          
+                    </div>
+                    <div *ngIf="isInFrequency(habit,day) && isDayChecked(habit,day)" class="w-12 h-12 bg-rose-600 border border-rose-600 rounded-full">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                             <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
                         </svg>
